@@ -1,5 +1,7 @@
+import Head from "next/head"
 import useSWR from "swr"
 import dayjs from "dayjs"
+import TodoForm from "components/Todoform"
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -18,12 +20,20 @@ const tableRowItem = function (item) {
 
 export default function Home() {
 
-  const { data, error } = useSWR('/api/todos', fetcher)
+  const { data, error } = useSWR('/api/todos', fetcher, { refreshInterval: 1000 })
 
+  if (error) return <div>Failed to Load</div>
   if (!data) return <div>Carregando...</div>
 
   return (
     <div>
+      <Head>
+        <title>To-do</title>
+        <meta name="description" content="To-Do NextJS" />
+      </Head>
+
+      <TodoForm />
+
       <table>
         <thead>
 
