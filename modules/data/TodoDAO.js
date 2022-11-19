@@ -8,7 +8,7 @@ const insert = async (todo) => {
 
 const update = async (todo) => {
     return await db.todo.update({
-        where: { id: todo, id },
+        where: { id: todo.id },
         data: todo
     })
 }

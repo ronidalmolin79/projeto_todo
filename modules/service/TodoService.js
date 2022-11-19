@@ -1,4 +1,4 @@
-import { insert, uptdate, remove, listAll } from 'modules/data/TodoDAO'
+import { insert, update, remove, listAll } from 'modules/data/TodoDAO'
 
 const handlePost = async (reqParams) => {
     const result = {
@@ -24,8 +24,8 @@ const handlePut = async (reqParams) => {
     }
 
     try {
-        const uptdateObj = await uptdate(reqParams.data)
-        result.data = uptdateObj
+        const updateObj = await update(reqParams.data)
+        result.data = updateObj
     } catch (error) {
         result.status = 500,
             result.data = error.message
