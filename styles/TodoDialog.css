@@ -1,4 +1,4 @@
-.todo.dialog {
+.todo-dialog {
     border-radius: 2px;
     background-color: #FFF;
     position: fixed;
@@ -7,10 +7,10 @@
     min-width: 20em;
     transform: translate(-50%, -50%);
     border: 1px solid black;
-    box-shadow: 0px 10px 16px -2px rgba (0, 0, 0, 0.1);
+    box-shadow: 0px 10px 16px -2px rgba(0, 0, 0, 0.1);
 }
 
-.todo.dialog-toolbar {
+.todo-dialog-toolbar {
     display: flex;
     flex: 1;
     padding: 0.5em;
@@ -18,21 +18,25 @@
     margin-bottom: 0.1em;
     border-bottom: 1px solid black;
     -webkit-user-select: none;
+    /* Safari */
     -moz-user-select: none;
+    /* Firefox */
     -ms-user-select: none;
+    /* IE10+/Edge */
     user-select: none;
+    /* Standard */
 }
 
-.todo.dialog-toolbar>.close {
+.todo-dialog-toolbar>.close {
     color: #B80C09;
 }
 
-.todo.dialog-toolbar>.close:hover {
+.todo-dialog-toolbar>.close:hover {
     color: red;
     cursor: pointer;
 }
 
-.todo.dialog-body {
+.todo-dialog-body {
     display: flex;
     flex-direction: column;
     padding: 0.5em;
@@ -45,7 +49,7 @@
     min-height: 50px;
     max-height: 350px;
     margin-top: 0.5em;
-    border: 0.1em solid#333;
+    border: 0.1em solid #333;
     border-radius: 2px;
     padding: 0.5em;
     font-size: 1em;
