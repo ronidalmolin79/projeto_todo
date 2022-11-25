@@ -1,6 +1,6 @@
 import Head from "next/head"
 import useSWR from "swr"
-import TodoForm from "components/Todoform";
+import TodoForm from "components/TodoForm";
 import TodoDialog from "components/TodoDialog";
 import { useState } from "react";
 
