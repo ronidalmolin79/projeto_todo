@@ -3,7 +3,7 @@ import useSWR, { useSWRConfig } from 'swr'
 import TodoForm from 'components/TodoForm';
 import TodoDialog from 'components/TodoDialog';
 import { useState, React } from 'react';
-import { Container, Row, Col, ListGroup, Stack, Form, Button, Modal, FormGroup, FormLabel } from 'react-bootstrap'
+import { Container, Row, Col, ListGroup, Stack, Form, Button, Modal } from 'react-bootstrap';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
@@ -44,26 +44,23 @@ const openDialog = (item, setIsOpen, setSelectedObj) => {
 
 const tableRowItem = (item, handleItemClick, mutate) => {
   return (
-    <>
-      <ListGroup.Item key={item.id} variant={item.done && "success"} onClick={() => handleItemClick(item)}>
-        <Stack direction='horizontal' gap={(2)}>
-          <div className='me-auto'>
-            <Form.Check
-              checked={item.done}
-              onClick={(e) => {
-                e.stopPropagation();
-                item.done = !item.done
-                updateTodo(item, mutate)
-              }}
-              onChange={() => { }}
-              type="switch" />
-          </div>
-          <div className='me-auto'> {item.title}</div>
-          <Button variant='danger' size='sm' onClick={(e) => removeTodo(e, item.id, mutate)}>x</Button>
-        </Stack>
-      </ListGroup.Item>
-    </>
-
+    <ListGroup.Item key={item.id} variant={item.done && "success"} onClick={() => handleItemClick(item)}>
+      <Stack direction="horizontal" gap={2}>
+        <div className="me-auto">
+          <Form.Check
+            checked={item.done}
+            onClick={(e) => {
+              e.stopPropagation();
+              item.done = !item.done;
+              updateTodo(item, mutate)
+            }}
+            onChange={() => { }}
+            type="switch" />
+        </div>
+        <div className="me-auto">{item.title}</div>
+        <div><Button variant="danger" size="sm" onClick={(e) => removeTodo(e, item.id, mutate)}>X</Button></div>
+      </Stack>
+    </ListGroup.Item>
   )
 }
 
@@ -81,6 +78,9 @@ export default function Home() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  if (error) return <div>Failed to Load</div>
+  if (!data) return <div>Loading...</div>
+
   const handleItemClick = (item) => {
     setSelectedObj(item)
     handleShow()
@@ -88,16 +88,12 @@ export default function Home() {
     setInputTitle(item.title)
   }
 
-  if (error) return <div>Failed to Load</div>
-  if (!data) return <div>Loading...</div>
-
   return (
     <>
       <Container>
         <Row>
           <Col><TodoForm /></Col>
         </Row>
-
         <Row>
           <Col>
             <ListGroup>
@@ -111,31 +107,30 @@ export default function Home() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar Tarefa</Modal.Title>
+          <Modal.Title>Editar tarefa</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={(e) => { e.preventDefault }}>
-            <Form.Group className='mb-3'>
-              <Form.Label>Titulo da Tarefa</Form.Label>
-              <Form.Control type='text' value={inputTitle} onChange={(e) => setInputTitle(e.target.value)} />
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Título da Tarefa</Form.Label>
+              <Form.Control type="text" value={inputTitle} onChange={(e) => setInputTitle(e.target.value)} />
             </Form.Group>
-            <Form.Group className='mb-3'>
-              <Form.Label>Descrição da Tarefa</Form.Label>
-              <Form.Control as='textarea' rows={4} value={inputDescription} onChange={(e) => setInputDescription(e.target.value)} />
+            <Form.Group className="mb-3">
+              <Form.Label>Descrição da tarefa</Form.Label>
+              <Form.Control as="textarea" rows={4} value={inputDescription} onChange={(e) => setInputDescription(e.target.value)} />
             </Form.Group>
           </Form>
-
-
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant='success' onClick={() => {
+          <Button variant="success" onClick={() => {
             selectedObj.title = inputTitle
             selectedObj.description = inputDescription
             updateTodo(selectedObj, mutate)
-            setInputDescription('')
-            setInputTitle('')
+            setInputDescription("")
+            setInputTitle("")
+            setSelectedObj({})
             handleClose()
           }}>
             Salvar
